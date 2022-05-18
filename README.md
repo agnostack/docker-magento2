@@ -1,7 +1,7 @@
 
-# Docker Magento 2.4.X Open Source (CE) 01-2022
+# Docker Magento 2.4.3-p1 Open Source (CE) 01-2022
 
-Docker containers for Magento 2.4.x development including :
+Docker container for Magento 2.4.3-p1 development including :
 
   - PHP 7.4
   - Apache 2.4
@@ -16,33 +16,47 @@ Docker containers for Magento 2.4.x development including :
 
 ## Installation
 
-1. git clone https://github.com/gaiterjones/docker-magento2  
-2. EDIT .env - **add your Magento authentication keys**  
-3. `docker-compose build`
-4. `docker-compose up -d`   
-5. Install sample data
-`docker-compose exec -u magento php-apache install-sampledata`
+### Modify settings in Docker Desktop
+Resources > ADVANCDED: Increase Memory to ~8GB
+Resources > FILE SHARING: Add a new path for `/home`
 
-6. Install Magento
-`docker-compose exec -u magento php-apache install-magento`
+### Modify vHosts
+add a new entry in /etc/hosts
+`127.0.0.1 ::1 magento2.dev.local`
 
-7. Disable 2FA for testing
-`docker-compose exec -u magento php-apache bin/magento module:disable Magento_TwoFactorAuth`
+### Clone this repo
+### EDIT .env
+CONTAINERDATA
+MAGENTO_REPO_USERNAME
+MAGENTO_REPO_PASSWORD
+
+### Build/Launch
+`cd magento2`
+`docker-compose build`
+`docker-compose up -d`
+
+### Configure
+(ssh into container)
+`docker-compose exec -u magento php-apache bash`
+
+(Install Magento)
+`install-magento`
+
+(Install sample data)
+`install-sampledata`
+
+(Disable 2FA for testing)
+`bin/magento module:disable Magento_TwoFactorAuth`
+
+(Fix layout issues with demo data)
+`cp /var/www/dev/magento2/vendor/magento/module-cms-sample-data/fixtures/styles.css /var/www/dev/magento2/pub/media/`
 
 ## Test
 
  - Admin
-http://magento2.dev.com/admin  
+http://magento2.dev.local/admin  
  - Frontend
-http://magento2.dev.com   
+http://magento2.dev.local  
  - CLI
+`docker-compose exec -u magento php-apache bash`
 
-
-    `docker-compose exec -u magento php-apache bash`
-
-to fix layout issues with demo data : `docker-compose exec -u magento php-apache cp /var/www/dev/magento2/vendor/magento/module-cms-sample-data/fixtures/styles.css /var/www/dev/magento2/pub/media/`
-### More
-
-https://blog.gaiterjones.com/docker-magento-2-development-deployment-php7-apache2-4-redis-varnish-scaleable/ for further deployment instructions.
-
-![MAGENTO2 INSTALL](https://blog.gaiterjones.com/dropbox/docker-install-magento240.gif)
