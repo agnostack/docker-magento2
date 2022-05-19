@@ -17,8 +17,7 @@ Docker container for Magento 2.4.3-p1 development including :
 ## Installation
 
 ### Modify settings in Docker Desktop
-- Resources > ADVANCDED: Increase Memory to ~8GB
-- Resources > FILE SHARING: Add a new path for `/home`
+- Resources > ADVANCED: Increase Memory to ~8GB
 
 ### Modify vHosts
 add a new entry in /etc/hosts
@@ -39,7 +38,7 @@ add a new entry in /etc/hosts
 `docker-compose up -d`
 
 ### Configure
-(ssh into container)
+(ssh into container via:)
 
 `docker-compose exec -u magento php-apache bash`
 
@@ -65,9 +64,13 @@ add a new entry in /etc/hosts
 ## Test
 
  - Admin
-http://magento2.dev.local/admin  
+http://magento2.dev.local/admin
+
  - Frontend
-http://magento2.dev.local  
+http://magento2.dev.local
+
  - CLI
 `docker-compose exec -u magento php-apache bash`
+
+**NOTE** code within `magento2_php-apache container` located at: `/var/www/dev/magento2/vendor/magento`
 
